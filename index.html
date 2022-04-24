@@ -33,16 +33,13 @@
       }
     </script>
     
-    <form>
+    <form onsubmit="book.titlechange(title)" onsubmit="book.colorchange(color)" onsubmit="book.fontcolorchange(fontcolor)">
       <label for="title">Title:</label><br>
       <input type="text" id="title" name="title"><br>
       <label for="color">Color:</label><br>
       <input type="text" id="color" name="color"><br>
       <label for="fontcolor">Font Color:</label><br>
       <input type="text" id="fontcolor" name="fontcolor"><br>
-    <div id="text" onclick="book.titlechange(title)" onclick="book.colorchange(color)" onclick="book.fontcolorchange(fontcolor)">
-      Change!
-    </div>
     </form>
     
     </body>
