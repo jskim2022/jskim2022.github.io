@@ -2,14 +2,18 @@
 <html>
   <head><title>Page 1</title></head>
   <body>
+    
     <h1>Hello!</h1>
+    
     <h2>
       My name is Joseph Song-Kim. <br>
       I look forward to working with all of you.
     </h2>
+    
     <div id="text" onclick="changeColor()">
       Click me!
     </div>
+    
     <script>
       console.log("Hello!")
       val = 0
@@ -30,7 +34,12 @@
     </script>
     
     <form>
-    
+      <label for="title">Title:</label><br>
+      <input type="text" id="title" name="title" onsubmit="titlechange(title)"><br>
+      <label for="color">Color:</label><br>
+      <input type="text" id="color" name="color" onsubmit="colorchange(color)">
+      <label for="fontcolor">Font Color:</label><br>
+      <input type="text" id="fontcolor" name="fontcolor" onsubmit="fontcolorchange(fontcolor)">
     </form>
     
     </body>
