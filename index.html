@@ -14,7 +14,7 @@
       Click me!
     </div>
     
-    <script>
+    <script type = "text/javascript">
       console.log("Hello!")
       val = 0
       document.write(val)
@@ -33,7 +33,10 @@
       }
     </script>
     
-    <form onsubmit="book.titlechange(document.getElementById("title"))" onsubmit="book.colorchange(document.getElementById("color"))" onsubmit="book.fontcolorchange(document.getElementById(fontcolor"))" onsubmit="return false">
+    <form name = "myForm" 
+          action = "javascript:book.titlechange(title.value)"
+          action = "javascript:book.colorchange(color.value)"
+          action = "javascript:book.fontcolorchange(fontcolor.value)">
       <label for="title">Title:</label><br>
       <input type="text" id="title" name="title"><br>
       <label for="color">Color:</label><br>
