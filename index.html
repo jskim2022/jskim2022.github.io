@@ -30,6 +30,10 @@
         fontcolorchange: function(fontcolor) {this.fontcolor = fontcolor},
         title: "",
         titlechange: function(title) {this.title = title}
+        
+        document.getElementById("titl").innerHTML = title;
+        document.getElementById("colo").innerHTML = color;
+        document.getElementById("fontcolo").innerHTML = fontcolor;
       }
     </script>
     
@@ -61,9 +65,9 @@
         <th>Font Color</th>
       </tr>
       <tr>
-        <td>document.getElementById("title")</td>
-        <td>document.getElementById("color")</td>
-        <td>document.getElementById("fontcolor")</td>
+        <td><span id="titl"></span></td>
+        <td><span id="colo"></span></td>
+        <td><span id="fontcolo"></span></td>
       </tr>
     </table>
     
