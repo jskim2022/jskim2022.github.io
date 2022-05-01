@@ -35,6 +35,10 @@
         document.getElementById("color").innerHTML = color;
         document.getElementById("fontcolor").innerHTML = fontcolor;
       }
+      
+        document.getElementById("title").innerHTML = title;
+        document.getElementById("color").innerHTML = color;
+        document.getElementById("fontcolor").innerHTML = fontcolor;
     </script>
     
     <form name = "titleForm" 
@@ -57,19 +61,12 @@
       <input type="text" id="fontcolor" name="fontcolor"><br>
       <input type="submit">
     </form>
-
-    <table>
-      <tr>
-        <th>Title</th>
-        <th>Color</th>
-        <th>Font Color</th>
-      </tr>
-      <tr>
-        <td><span id="title"></span></td>
-        <td><span id="color"></span></td>
-        <td><span id="fontcolor"></span></td>
-      </tr>
-    </table>
+    
+    <h2>
+      Title: <span id="title"></span><br>
+      Color: <span id="color"></span><br>
+      Font Color: <span id="fontcolor"></span>
+    </h2>
     
     </body>
   </html>
