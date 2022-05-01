@@ -30,11 +30,13 @@
         fontcolorchange: function(fontcolor) {this.fontcolor = fontcolor},
         title: "",
         titlechange: function(title) {this.title = title}
+        
+        listelements: function() {
+          document.write("Title: " + book.title)
+          document.write("Color: " + book.color)
+          document.write("Font Color: " + book.fontcolor)
+        }
       }
-      
-      document.getElementById("titl").innerHTML = book.title;
-      document.getElementById("colo").innerHTML = book.color;
-      document.getElementById("fontcolo").innerHTML = book.fontcolor;
     </script>
     
     <form name = "titleForm" 
@@ -56,13 +58,11 @@
       <label for="fontcolor">Font Color:</label><br>
       <input type="text" id="fontcolor" name="fontcolor"><br>
       <input type="submit">
+      
+    <form name = ""
+          action = "javascript:book.listelements">
+      <input type="submit">
     </form>
-    
-    <h2>
-      Title: <span id="titl"></span><br>
-      Color: <span id="colo"></span><br>
-      Font Color: <span id="fontcolo"></span>
-    </h2>
     
     </body>
   </html>
