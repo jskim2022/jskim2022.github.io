@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-  <head><title>Page 1</title></head>
+  <head><title>Assignments</title></head>
   <body>
     
     <h1>Hello!</h1>
@@ -23,43 +23,48 @@
         document.getElementById("text").style.color = "red";
       }
       
-      let book = { 
-        color: "white", 
-        colorchange: function(color) {this.color = color},
-        fontcolor: "black",
-        fontcolorchange: function(fontcolor) {this.fontcolor = fontcolor},
-        title: "",
-        titlechange: function(title) {this.title = title},
+      const book = { 
+        color: "White", 
+        fontcolor: "Black",
+        title: "The Odyssey",
       }
       
-      for (x of document.getElementsByClassName("colorchangers")){
-        x.onclick=book.colorchange(ncolor.value),
-        x.onclick=changeColor()
+      function colorchange(color) {
+        book.color = color;
+      }
+      
+      function fontcolorchange(fontcolor) {
+        book.fontcolor = fontcolor;
+      }
+      
+      function titlechange(title) {
+        book.title = title;
+      }
+      
+      function listElements() {
+        console.log(Object.keys(book));
       }
     </script>
     
     <form name = "titleForm" 
-          action = "javascript:book.titlechange(title.value)"
+          action = "javascript:titlechange(title.value)"
       <label for="title">Title:</label><br>
       <input type="text" id="title" name="title"><br>
       <input type="submit">
     </form>
     
     <form name = "colorForm" 
-          action = "javascript:book.colorchange(color.value)"
+          action = "javascript:colorchange(color.value)"
       <label for="color">Color:</label><br>
       <input type="text" id="color" name="color"><br>
       <input type="submit">
     </form>
     
     <form name = "fontcolorForm" 
-          action = "javascript:book.fontcolorchange(fontcolor.value)">
+          action = "javascript:fontcolorchange(fontcolor.value)">
       <label for="fontcolor">Font Color:</label><br>
       <input type="text" id="fontcolor" name="fontcolor"><br>
       <input type="submit">
     
     </body>
-    
-    <p class="colorchangers" id="ncolor" name="ncolor">Red</p>
-    <p class="colorchangers" id="ncolor" name="ncolor">Blue</p>
   </html>
