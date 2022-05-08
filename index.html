@@ -45,7 +45,10 @@
         console.log(Object.keys(book));
       }
 
-      document.getElementById("colorc").onclick = function() {colorchange(document.getElementById("colorc").value)}
+      function changeRed() {
+        document.getElementById("cred").style.color = "red";
+        book.color = document.getElementById("cred").value;
+      }
     </script>
     
     <form name = "titleForm" 
@@ -72,7 +75,6 @@
         Click me!
       </div>
     
-    <p id="colorc">Red</p>
-    <p id="colorc">Blue</p>
+    <p id="cred">Red</p>
     </body>
   </html>
