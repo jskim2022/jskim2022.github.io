@@ -46,10 +46,17 @@
       }
       
       for (x of document.getElementsByClassName("colorcs")){
-	      x.onclick=function(){
-		      book.color = colorcs.value;
-		      }
-	      }
+	x.onclick=function(){
+		let y=this.children[0];
+		if (y.value == "Blue") {
+			book.color = "Blue";
+			} 
+		else if (y.value == "Red"){
+			book.color = "Red";
+			}
+		}
+	}
+      }
     </script>
     
     <form name = "titleForm" 
