@@ -47,7 +47,17 @@
 
       function changeRed() {
         document.getElementById("cred").style.color = "red";
-        book.color = document.getElementById("cred").value;
+        book.color = "Red";
+      }
+      
+      function changeOrange() {
+        document.getElementById("coran").style.color = "Orange";
+        book.color = "Orange";
+      }
+      
+      function changeBack() {
+        document.getElementById("coran").style.color = "Blue";
+        book.color = "Blue";
       }
     </script>
     
@@ -72,5 +82,6 @@
       <input type="submit">
     
     <div id="cred" onclick="changeRed()">Red</div>
+    <div id="coran" onmouseover="changeOrange()" onmouseout="changeBack()" style="color:blue">&#9632;</div>
     </body>
   </html>
