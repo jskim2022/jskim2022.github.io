@@ -48,20 +48,14 @@
       for (x of document.getElementsByClassName("colorcs")){
 	x.onclick=function(){
 		let y=this.children[0];
-		if (y == "Blue") {
-			book.color = "Blue";
-			} 
-		else if (y == "Red"){
-			book.color = "Red";
-			}
-		}
-	      
-	      if (y.style.display=='none') {
+		if (y.style.display=='none') {
 			y.style.display='inline';
 			} 
 		else {
 			y.style.display='none';
 			}
+		}
+	}
       }
     </script>
     
