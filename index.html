@@ -31,6 +31,10 @@
         title: "",
         titlechange: function(title) {this.title = title},
       }
+      
+      for (x of document.getElementsByClassName("colorchangers")){
+        book.colorchange(ncolor.value)
+	    }
     </script>
     
     <form name = "titleForm" 
@@ -55,12 +59,6 @@
     
     </body>
     
-    <div id="text" 
-         onclick="book.colorchange("purple")">
-      Purple
-    </div>
-
-    <div style="color:blue"
-         onclick="book.colorchange("blue")">
-      &#9632;</div>
+    <p class="colorchangers" id="ncolor" name="ncolor">Red</p>
+    <p class="colorchangers" id="ncolor" name="ncolor">Blue</p>
   </html>
