@@ -44,6 +44,12 @@
       function listElements() {
         console.log(Object.keys(book));
       }
+      
+      for (x of document.getElementsByClassName("colorcs")){
+	      x.onclick=function(){
+		      book.color = colorcs.value;
+		      }
+	      }
     </script>
     
     <form name = "titleForm" 
@@ -66,5 +72,8 @@
       <input type="text" id="fontcolor" name="fontcolor"><br>
       <input type="submit">
     
+    
+    <p class="colorcs" id="colorcs" name="colorcs">Red</p>
+    <p class="colorcs" id="colorcs" name="colorcs">Blue</p>  
     </body>
   </html>
