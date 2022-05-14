@@ -53,13 +53,13 @@
           <th>Title</th>
           <th>Color</th>
           <th>Font Color</th>
-          <th>Page Number</th>
+          <th>Closed Status</th>
         </tr>
         <tr bgcolor="#ffffff">
           <td id="titl"></td>
           <td id = "colo"></td>
           <td id = "fontcolo"></td>
-          <td id = "pagenu"></td>
+          <td id = "booksta"></td>
         </tr>
       </table>
 
@@ -81,7 +81,7 @@
           color: "White", 
           fontcolor: "Black",
           title: "The Odyssey",
-          pagenum: 1,
+          closestat: "Open",
       }
             
       function colorchange(color) {
@@ -114,7 +114,7 @@
           document.getElementById("titl").innerHTML=book.title;
           document.getElementById("colo").innerHTML=book.color;
           document.getElementById("fontcolo").innerHTML=book.fontcolor;
-          document.getElementById("pagenu").innerHTML=book.pagenum;
+          document.getElementById("booksta").innerHTML=book.closestat;
       }, 1000);
       
       var canvas = document.querySelector("canvas");
@@ -168,6 +168,8 @@
           if (x4 < 435){
               x4 += dx;
           }
+
+          book.closestat = "Closed";
       }
       
     </script>
