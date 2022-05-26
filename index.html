@@ -1,177 +1,288 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-      <meta charset="UTF-8">
-    <title>Assignments</title>
-    <style type="text/css">
+<head>
+    <meta charset="UTF-8">
+    <title>Pong Game JavaScript</title>
+    <style>
+        body{
+            background-color: dimgray;
+        }
+        #pong{
+            border: 2px solid #FFF;
+            position: absolute;
+            margin :auto;
+            top:0;
+            right:0;
+            left:0;
+            bottom:0;
+        }
+    </style>
+</head>
+<body>
+   <canvas id="pong" width="600" height="400"></canvas>
+   <script>
+// select canvas element
+const canvas = document.getElementById("pong");
 
-      body {
-          margin: 0;
-      }
-      #flipcanvas {
-          border: 1px solid black;
-          background: lightgrey;
-      }
+// getContext of canvas = methods and properties to draw and do a lot of thing to the canvas
+const ctx = canvas.getContext('2d');
 
-    </style> 
-  </head>
-  <body>
-    
-    <h1>Hello!</h1>
-    
-    <h2>
-      My name is Joseph Song-Kim. <br>
-      I look forward to working with all of you.
-    </h2>
-    
-    <div id="text" onclick="changeColor()">
-      Click me!
-    </div>
-    
-    <form name = "titleForm" 
-          action = "javascript:titlechange(title.value)"
-      <label for="title">Title:</label><br>
-      <input type="text" id="title" name="title"><br>
-      <input type="submit">
-    </form>
-    
-    <form name = "colorForm" 
-          action = "javascript:colorchange(color.value)"
-      <label for="color">Color:</label><br>
-      <input type="text" id="color" name="color"><br>
-      <input type="submit">
-    </form>
-    
-    <form name = "fontcolorForm" 
-          action = "javascript:fontcolorchange(fontcolor.value)">
-      <label for="fontcolor">Font Color:</label><br>
-      <input type="text" id="fontcolor" name="fontcolor"><br>
-      <input type="submit"> <br><br>
+// load sounds
+let hit = new Audio();
+let wall = new Audio();
+let userScore = new Audio();
+let comScore = new Audio();
+let limit = 10;
 
-      <table cellspacing="3" bgcolor="#000000">
-        <tr bgcolor="#ffffff">
-          <th>Title</th>
-          <th>Color</th>
-          <th>Font Color</th>
-          <th>Closed Status</th>
-        </tr>
-        <tr bgcolor="#ffffff">
-          <td id="titl"></td>
-          <td id = "colo"></td>
-          <td id = "fontcolo"></td>
-          <td id = "booksta"></td>
-        </tr>
-      </table>
+hit.src = "sounds/hit.mp3";
+wall.src = "sounds/wall.mp3";
+comScore.src = "sounds/comScore.mp3";
+userScore.src = "sounds/userScore.mp3";
 
-    <img id = "bookimg" onmouseover="changeOrange()" onmouseout="changeBack()" src="data:image/png;base64,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"><br><br><br>
+// Ball object
+const ball = {
+    x : canvas.width/2,
+    y : canvas.height/2,
+    radius : 18,
+    velocityX : 5,
+    velocityY : 5,
+    speed : 7,
+    color : "WHITE"
+}
+
+// User Paddle
+const user = {
+    x : 0, // left side of canvas
+    y : (canvas.height - 100)/2, // -100 the height of paddle
+    width : 10,
+    height : 100,
+    score : 0,
+    color : "WHITE"
+}
+
+// COM Paddle
+const com = {
+    x : canvas.width - 10, // - width of paddle
+    y : (canvas.height - 100)/2, // -100 the height of paddle
+    width : 10,
+    height : 100,
+    score : 0,
+    color : "WHITE"
+}
+
+// NET
+const net = {
+    x : (canvas.width - 2)/2,
+    y : 0,
+    height : 10,
+    width : 2,
+    color : "WHITE"
+}
+
+// draw a rectangle, will be used to draw paddles
+function drawRect(x, y, w, h, color){
+    ctx.fillStyle = color;
+    ctx.fillRect(x, y, w, h);
+}
+
+// draw circle, will be used to draw the ball
+function drawArc(x, y, r, color){
+    ctx.fillStyle = color;
+    ctx.beginPath();
+    ctx.arc(x,y,r,0,Math.PI*2,true);
+    ctx.closePath();
+    ctx.fill();
+}
+
+// listening to the mouse
+canvas.addEventListener("mousemove", getMousePos);
+
+function getMousePos(evt){
+    let rect = canvas.getBoundingClientRect();
     
-    <canvas id="flipcanvas">
-    </canvas> <br><br>
+    user.y = evt.clientY - rect.top - user.height/2;
+}
 
-    <button onclick="bookclose()">Close the book</button>
+// when COM or USER scores, we reset the ball
+function resetBall(){
+    ball.x = canvas.width/2;
+    ball.y = canvas.height/2;
+    ball.velocityX = -ball.velocityX;
+    ball.speed = 7;
+}
 
-    <script type = "text/javascript">
-        console.log("Hello!")
-      
-      function changeColor(color) {
-          document.getElementById("text").style.color = "red";
-      }
-            
-      const book = { 
-          color: "White", 
-          fontcolor: "Black",
-          title: "The Odyssey",
-          closestat: "Open",
-      }
-            
-      function colorchange(color) {
-          book.color = color;
-      }
-            
-      function fontcolorchange(fontcolor) {
-          book.fontcolor = fontcolor;
-      }
-            
-      function titlechange(title) {
-          book.title = title;
-      }
-            
-      function listElements() {
-          console.log(Object.keys(book));
-      }
-            
-      function changeOrange() {
-          document.getElementById("bookimg").style.color = "Orange";
-          book.color = "Orange";
-      }
-            
-      function changeBack() {
-          document.getElementById("bookimg").style.color = "Blue";
-          book.color = "Blue";
-      }
-      
-      setInterval(function(){ 
-          document.getElementById("titl").innerHTML=book.title;
-          document.getElementById("colo").innerHTML=book.color;
-          document.getElementById("fontcolo").innerHTML=book.fontcolor;
-          document.getElementById("booksta").innerHTML=book.closestat;
-      }, 1000);
-      
-      var canvas = document.querySelector("canvas");
-      canvas.width = 900;
-      canvas.height = 500;
-      
-      var c = canvas.getContext("2d");
-      console.log(canvas);
-      
-      
-      c.fillRect(200,100,250,300);
-      c.fillRect(450,100,250,300);
-      c.fillStyle = "rgba(255, 255, 255, 1)"
-      c.fillRect(225,125,225,250);
-      c.fillRect(450,125,225,250);
-      
-      c.beginPath();
-      c.moveTo(450, 125);
-      c.lineTo(450, 375);
-      c.stroke();
-      
-      var x = 200;
-      var x2 = 200;
-      var x3 = 450;
-      var x4 = 300;
-      var dx = 15;
-      function bookclose() {
-          requestAnimationFrame(bookclose);
-          c.clearRect(0, 0, 900, 500);
-      
-          c.fillStyle = "rgba(0, 0, 0, 1)"
-          c.fillRect(x2 + 250, 100, 250,300);
-          if (x2 + 250 > 345){
-              x2 -= dx;
-          }
-      
-          c.fillStyle = "rgba(255, 255, 255, 1)"
-          c.fillRect(x3,125,225,250);
-          if (x3 > 345){
-              x3 -= dx;
-          }
-      
-          c.fillStyle = "rgba(0, 0, 0, 1)"
-          c.fillRect(x, 100,250,300);
-          if (x < 325){
-              x += dx;
-          }
-      
-          c.fillStyle = "rgba(255, 255, 255, 1)"
-          c.fillText(book.title, x4, 150);
-          if (x4 < 435){
-              x4 += dx;
-          }
+// draw the net
+function drawNet(){
+    for(let i = 0; i <= canvas.height; i+=15){
+        drawRect(net.x, net.y + i, net.width, net.height, net.color);
+    }
+}
 
-          book.closestat = "Closed";
-      }
-      
-    </script>
-    </body>
-  </html>
+// draw text
+function drawText(text,x,y){
+    ctx.fillStyle = "#FFF";
+    ctx.font = "75px fantasy";
+    ctx.fillText(text, x, y);
+}
+
+// collision detection
+function collision(b,p){
+    p.top = p.y;
+    p.bottom = p.y + p.height;
+    p.left = p.x;
+    p.right = p.x + p.width;
+    
+    b.top = b.y - b.radius;
+    b.bottom = b.y + b.radius;
+    b.left = b.x - b.radius;
+    b.right = b.x + b.radius;
+    
+    return p.left < b.right && p.top < b.bottom && p.right > b.left && p.bottom > b.top;
+}
+
+// update function, the function that does all calculations
+function update(){
+    
+    // change the score of players, if the ball goes to the left "ball.x<0" computer win, else if "ball.x > canvas.width" the user win
+    if( ball.x - ball.radius < 0 ){
+        com.score++;
+        comScore.play();
+        resetBall();
+    }else if( ball.x + ball.radius > canvas.width){
+        user.score++;
+        userScore.play();
+        resetBall();
+    }
+    
+    // the ball has a velocity
+    ball.x += ball.velocityX;
+    ball.y += ball.velocityY;
+    
+    // computer plays for itself, and we must be able to beat it
+    // simple AI
+    
+    // when the ball collides with bottom and top walls we inverse the y velocity.
+    if(ball.y - ball.radius < 0 || ball.y + ball.radius > canvas.height){
+        ball.velocityY = -ball.velocityY;
+        wall.play();
+    }
+    
+    // we check if the paddle hit the user or the com paddle
+    let player = (ball.x + ball.radius < canvas.width/2) ? user : com;
+    
+    // if the ball hits a paddle
+    if(collision(ball,player)){
+        // play sound
+        hit.play();
+        // we check where the ball hits the paddle
+        let collidePoint = (ball.y - (player.y + player.height/2));
+        // normalize the value of collidePoint, we need to get numbers between -1 and 1.
+        // -player.height/2 < collide Point < player.height/2
+        collidePoint = collidePoint / (player.height/2);
+        
+        // when the ball hits the top of a paddle we want the ball, to take a -45degees angle
+        // when the ball hits the center of the paddle we want the ball to take a 0degrees angle
+        // when the ball hits the bottom of the paddle we want the ball to take a 45degrees
+        // Math.PI/4 = 45degrees
+        let angleRad = (Math.PI/4) * collidePoint;
+        
+        // change the X and Y velocity direction
+        let direction = (ball.x + ball.radius < canvas.width/2) ? 1 : -1;
+        ball.velocityX = direction * ball.speed * Math.cos(angleRad);
+        ball.velocityY = ball.speed * Math.sin(angleRad);
+        
+        // speed up the ball everytime a paddle hits it.
+        if (ball.speed < limit){
+            ball.speed += 0.15;
+        }
+    }
+
+    if(collision(ball, user)){
+        if (user.height > 60 && com.height > 80){
+            user.height -= 5;
+        }
+        if (user.score > com.score){
+            if(pong.width >= 380)
+            pong.width -= 5;
+            net.x = (canvas.width - 2)/2 - 5;
+            com.x = (canvas.width - 10) - 2;
+            limit = 13;
+        }
+    }
+
+    if (com.score > user.score || com.score == user.score){
+        pong.width = 600;
+        net.x = (canvas.width - 2)/2;
+        com.x = (canvas.width - 10);
+        limit = 10;
+    }
+
+    if (user.score > com.score){
+        user.color = "GREEN";
+        com.color = "RED";
+        ball.radius = 9;
+    }
+    else if (user.score < com.score){
+        user.color = "RED";
+        com.color = "GREEN";
+        user.height = 100;
+        ball.radius = 18;
+        pong.width = 600;
+        net.x = (canvas.width - 2)/2;
+        com.x = (canvas.width - 10);
+    }
+    else{
+        user.color = "YELLOW";
+        com.color = "YELLOW";
+        ball.radius = 18;
+        user.height = 100;
+    }
+
+    if (user.score == 0 && com.score == 0){
+        com.y += ((ball.y - (com.y + com.height/2)))*0.08;
+    }
+    else if (user.score > com.score){
+        com.y += ((ball.y - (com.y + com.height/2)))*0.12;
+    }
+    else {
+        com.y += ((ball.y - (com.y + com.height/2)))*0.1;
+    }
+}
+
+// render function, the function that does al the drawing
+function render(){
+    
+    // clear the canvas
+    drawRect(0, 0, canvas.width, canvas.height, "#000");
+    
+    // draw the user score to the left
+    drawText(user.score,canvas.width/4,canvas.height/5);
+    
+    // draw the COM score to the right
+    drawText(com.score,3*canvas.width/4,canvas.height/5);
+    
+    // draw the net
+    drawNet();
+    
+    // draw the user's paddle
+    drawRect(user.x, user.y, user.width, user.height, user.color);
+    
+    // draw the COM's paddle
+    drawRect(com.x, com.y, com.width, com.height, com.color);
+    
+    // draw the ball
+    drawArc(ball.x, ball.y, ball.radius, ball.color);
+}
+function game(){
+    update();
+    render();
+}
+// number of frames per second
+let framePerSecond = 50;
+
+//call the game function 50 times every 1 Sec
+let loop = setInterval(game,1000/framePerSecond);
+
+   </script>
+</body>
+</html>
